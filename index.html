@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0b0f14">
+<title>Earn to Die — Clone</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <canvas id="game"></canvas>
+
+  <!-- ============ HUD ============ -->
+  <div id="hud" class="hidden">
+    <div class="hud-top">
+      <div class="chip"><span>💵</span><b id="hud-money">0</b></div>
+      <div class="chip"><span>🧟</span><b id="hud-kills">0</b></div>
+      <div class="chip"><span>📏</span><b id="hud-dist">0 м</b></div>
+      <div class="chip"><span>💨</span><b id="hud-speed">0</b> км/ч</div>
+    </div>
+    <div class="hud-bars">
+      <div class="bar-wrap">
+        <div class="bar-label">ТОПЛИВО</div>
+        <div class="bar-track"><i id="bar-fuel" class="bar-fill fuel"></i></div>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar-label">ЗДОРОВЬЕ</div>
+        <div class="bar-track"><i id="bar-hp" class="bar-fill hp"></i></div>
+      </div>
+    </div>
+    <div class="hud-bottom">
+      <div id="hud-level">УРОВЕНЬ 1</div>
+      <div id="hud-goal"></div>
+    </div>
+    <div class="touch-zones">
+      <div class="tz left" id="tz-left"><span>◀ ТОРМОЗ</span></div>
+      <div class="tz right" id="tz-right"><span>ГАЗ ▶</span></div>
+    </div>
+    <button id="btn-pause" class="btn-pause">⏸</button>
+  </div>
+
+  <!-- ============ МЕНЮ ============ -->
+  <div id="screen-menu" class="screen active">
+    <div class="menu-inner">
+      <h1 class="logo">EARN<span>TO</span>DIE</h1>
+      <p class="sub">Зомби-апокалипсис. Одна машина. Много бензина. Много мяса.</p>
+      <div class="menu-btns">
+        <button class="primary big" data-action="play">▶ ИГРАТЬ</button>
+        <button class="ghost" data-action="garage">🔧 ГАРАЖ</button>
+        <button class="ghost" data-action="settings">⚙ НАСТРОЙКИ</button>
+      </div>
+      <div class="stat-line">Всего заработано: <b id="menu-money">$0</b></div>
+    </div>
+  </div>
+
+  <!-- ============ ГАРАЖ ============ -->
+  <div id="screen-garage" class="screen">
+    <div class="panel">
+      <div class="panel-head">
+        <h2>🔧 ГАРАЖ</h2>
+        <div class="money-tag">💵 <b id="garage-money">0</b></div>
+        <button class="x" data-action="menu">✕</button>
+      </div>
+      <div class="garage-body">
+        <section class="col">
+          <h3>МАШИНЫ</h3>
+          <div id="car-list" class="list"></div>
+        </section>
+        <section class="col">
+          <h3>УЛУЧШЕНИЯ</h3>
+          <div id="upgrade-list" class="list"></div>
+        </section>
+      </div>
+      <div class="panel-foot">
+        <div id="level-select" class="level-select"></div>
+        <button class="primary" data-action="start">🏁 ПОЕХАЛИ!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ЭКРАН СМЕРТИ ============ -->
+  <div id="screen-death" class="screen">
+    <div class="panel narrow">
+      <h2 id="death-title">☠ ВОДИТЕЛЬ ПОГИБ</h2>
+      <p id="death-reason" class="reason">Причина: столкновение</p>
+      <div class="result-grid">
+        <div><span>Дистанция</span><b id="death-dist">0 м</b></div>
+        <div><span>Зомби</span><b id="death-kills">0</b></div>
+        <div><span>Заработано</span><b id="death-money" class="gold">$0</b></div>
+        <div><span>Рекорд уровня</span><b id="death-best">0 м</b></div>
+      </div>
+      <div class="panel-foot">
+        <button class="ghost" data-action="menu">В МЕНЮ</button>
+        <button class="primary" data-action="garage">В ГАРАЖ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ НАСТРОЙКИ ============ -->
+  <div id="screen-settings" class="screen">
+    <div class="panel narrow">
+      <div class="panel-head"><h2>⚙ НАСТРОЙКИ</h2><button class="x" data-action="menu">✕</button></div>
+      <div class="settings-body">
+        <label class="switch"><input type="checkbox" id="opt-sound" checked><span>Звук</span></label>
+        <label class="switch"><input type="checkbox" id="opt-debug"><span>Отладка физики (Matter.Render)</span></label>
+        <div class="io-row">
+          <button class="ghost" id="btn-export">⬇ Экспорт прогресса</button>
+          <button class="ghost" id="btn-import">⬆ Импорт прогресса</button>
+          <button class="ghost danger" id="btn-reset">🗑 Сбросить всё</button>
+        </div>
+        <textarea id="io-area" placeholder="JSON прогресса появится здесь"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
